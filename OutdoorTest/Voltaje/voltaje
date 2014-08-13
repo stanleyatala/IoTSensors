@@ -1,0 +1,24 @@
+#! /usr/bin/python
+# Importamos la libreria de PySerial y PiFace
+import serial
+import pifacecad
+
+# Inicializamos Piface y Serial a 9600
+cad = pifacecad.PiFaceCAD()
+cad.lcd.backlight_on()
+cad.lcd.home()
+cad.lcd.blink_off()
+cad.lcd.cursor_off()
+
+PuertoSerie = serial.Serial('/dev/ttyUSB0', 9600)
+
+# Creamos un bucle sin fin que lee el Serial y lo imprime en LCD
+
+while True:
+  # Leemos hasta que encontarmos el final de linea
+  lectura = PuertoSerie.readline()
+  # Imprimimos el valor leido
+  #print lectura.rstrip('\n')
+  cad.lcd.write("{voltaje}".format(voltaje=lectura))
+
+
